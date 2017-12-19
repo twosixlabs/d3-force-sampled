@@ -1,0 +1,43 @@
+{
+  "name": "d3-force-sampled",
+  "version": "0.0.1",
+  "description": "Fast force-directed graph layout using random sampling.",
+  "keywords": [
+    "d3",
+    "d3-module",
+    "layout",
+    "network",
+    "graph",
+    "force",
+    "sampled",
+    "verlet",
+    "infovis"
+  ],
+  "homepage": "https://github.com/twosixlabs/d3-force-sampled/",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Robert Gove",
+    "url": "http://rpgove.com"
+  },
+  "main": "build/d3-force-sampled.js",
+  "module": "index",
+  "jsnext:main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twosixlabs/d3-force-sampled.git"
+  },
+  "scripts": {
+    "pretest": "rm -rf build && mkdir build && rollup -c --banner \"$(preamble)\"",
+    "test": "tape 'test/**/*-test.js' && eslint index.js src",
+    "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-force-sampled.js -c -m -o build/d3-force-sampled.min.js",
+    "postpublish": "git push && git push --tags && zip -j build/d3-force-sampled.zip -- LICENSE README.md build/d3-force-sampled.js build/d3-force-sampled.min.js"
+  },
+  "devDependencies": {
+    "eslint": "4",
+    "package-preamble": "0.1",
+    "rollup": "0.50",
+    "seedrandom": "2",
+    "tape": "4",
+    "uglify-js": "3"
+  }
+}
