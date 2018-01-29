@@ -2,21 +2,197 @@ import constant from "./constant";
 
 export default function() {
   var nodes,
+      alpha,
       strength = constant(-30),
       strengths,
+      sqrt_n,
+      indicesForce,
+      indicesRepulse,
+      prevIndex = 0,
       distanceMin2 = 1,
       distanceMax2 = Infinity,
-      theta2 = 0.81;
+      numNN = constant(0),
+      maxNN;
 
-  function force() {
-    // TODO: implement force calculations
+  function addRandomNode(node) {
+    var randIdx = Math.floor(Math.random() * nodes.length),
+        randNode = nodes[randIdx],
+        randDist = (node.x - randNode.x) * (node.x - randNode.x) + (node.y - randNode.y) * (node.y - randNode.y),
+        currIdx,
+        currNode,
+        currDist,
+        maxI,
+        maxDist = -Infinity,
+        i = -1;
+
+    // If there is room for another, add it.
+    if (node.nearest.length < maxNN) {
+      node.nearest.push(randIdx);
+      return;
+    }
+
+    // Is this already in the list?
+    if (node.nearest.indexOf(randIdx) >= 0) return;
+
+    // Replace the farthest away "neighbor" with the new node.
+    while (++i < node.nearest.length) {
+      currIdx = node.nearest[i];
+      currNode = nodes[currIdx];
+      currDist = (node.x - currNode.x) * (node.x - currNode.x) + (node.y - currNode.y) * (node.y - currNode.y);
+      if (currDist > maxDist) {
+        maxI = i;
+        maxDist = currDist;
+      }
+    }
+
+    if (randDist < maxDist) {
+      node.nearest[maxI] = randIdx;
+    }
+  }
+
+  function getRandIndices(indices, num) {
+    num = Math.floor(num);
+    var i,
+        n = nodes.length,
+        cnt = n - num,
+        randIdx,
+        temp;
+
+    // Choose random indices.
+    for (i = n-1; i >= cnt; --i) {
+      randIdx = Math.floor(Math.random() * i);
+      temp = indices[randIdx];
+      indices[randIdx] = indices[i];
+      indices[i] = temp;
+    }
+
+    return indices.slice(cnt);
+  }
+
+  function approxRepulse(node) {
+    var i,
+        randIndices,
+        nearest,
+        currNode,
+        w,
+        x,
+        y,
+        l;
+
+    // Update the list of nearest nodes.
+    if (maxNN) addRandomNode(node);
+
+    // Choose random sqrt(n) nodes.
+    randIndices = getRandIndices(indicesRepulse, sqrt_n);
+
+    for (i = randIndices.length - 1; i >= 0; --i) {
+      currNode = nodes[randIndices[i]];
+
+      if (currNode === node) continue;
+
+      x = currNode.x - node.x;
+      y = currNode.y - node.y;
+      l = x * x + y * y;
+
+      if (l >= distanceMax2) continue;
+
+      // Limit forces for very close nodes; randomize direction if coincident.
+      if (x === 0) x = (Math.random() - 0.5) * 1e-6, l += x * x;
+      if (y === 0) y = (Math.random() - 0.5) * 1e-6, l += y * y;
+      if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
+
+      w = strengths[node.index] * alpha * Math.pow(2,-alpha) * sqrt_n / l;
+      node.vx += x * w;
+      node.vy += y * w;
+    }
+
+    nearest = node.nearest;
+
+    if (maxNN) for (i = nearest.length - 1; i >= 0; --i) {
+      currNode = nodes[nearest[i]];
+
+      if (currNode === node) continue;
+
+      x = currNode.x - node.x;
+      y = currNode.y - node.y;
+      l = x * x + y * y;
+
+      if (l >= distanceMax2) continue;
+
+      // Limit forces for very close nodes; randomize direction if coincident.
+      if (x === 0) x = (Math.random() - 0.5) * 1e-6, l += x * x;
+      if (y === 0) y = (Math.random() - 0.5) * 1e-6, l += y * y;
+      if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
+
+      w = strengths[node.index] * alpha * Math.pow(2,-alpha) * sqrt_n / l;
+      node.vx += x * w;
+      node.vy += y * w;
+    }
+  }
+
+  function constantRepulse(node) {
+    var i,
+        nearest,
+        currNode,
+        w,
+        x,
+        y,
+        l;
+
+    // Update the list of nearest nodes.
+    if (maxNN) addRandomNode(node);
+
+    nearest = node.nearest;
+
+    if (maxNN) for (i = nearest.length - 1; i >= 0; --i) {
+      currNode = nodes[nearest[i]];
+
+      if (currNode === node) continue;
+
+      x = currNode.x - node.x;
+      y = currNode.y - node.y;
+      l = x * x + y * y;
+
+      if (l >= distanceMax2) continue;
+
+      // Limit forces for very close nodes; randomize direction if coincident.
+      if (x === 0) x = (Math.random() - 0.5) * 1e-6, l += x * x;
+      if (y === 0) y = (Math.random() - 0.5) * 1e-6, l += y * y;
+      if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
+
+      w = strengths[node.index] * alpha * Math.pow(10,-alpha) * sqrt_n / l;
+      node.vx += x * w;
+      node.vy += y * w;
+    }
+  }
+
+  function force(_) {
+    var i = 0, n = nodes.length, upperIndex = (prevIndex + Math.floor(sqrt_n)) % n;
+    for (alpha = _; i < n; ++i) {
+      if ((prevIndex < upperIndex && i >= prevIndex && i < upperIndex) ||
+        (prevIndex > upperIndex && (i >= prevIndex || i < upperIndex))) approxRepulse(nodes[i]);
+      else if (maxNN) constantRepulse(nodes[i]);
+    }
+    prevIndex = upperIndex;
   }
 
   function initialize() {
     if (!nodes) return;
     var i, n = nodes.length, node;
+    sqrt_n = Math.sqrt(n);
+    indicesForce = new Array(n);
+    for (i = 0; i < n; ++i) indicesForce[i] = i;
+    indicesRepulse = indicesForce.slice();
     strengths = new Array(n);
-    for (i = 0; i < n; ++i) node = nodes[i], strengths[node.index] = +strength(node, i, nodes);
+    
+    // Number of nearest neighbors cannot be negative.
+    maxNN = Math.floor(numNN(nodes));
+    maxNN = maxNN < 0 ? 0 : Math.min(maxNN, nodes.length);
+    for (i = 0; i < n; ++i) {
+      node = nodes[i];
+      strengths[node.index] = +strength(node, i, nodes);
+      node.nearest = [];
+    }
   }
 
   force.initialize = function(_) {
@@ -36,8 +212,8 @@ export default function() {
     return arguments.length ? (distanceMax2 = _ * _, force) : Math.sqrt(distanceMax2);
   };
 
-  force.theta = function(_) {
-    return arguments.length ? (theta2 = _ * _, force) : Math.sqrt(theta2);
+  force.useNearestNeighbors = function(_) {
+    return arguments.length ? (numNN = typeof _ === "function" ? _ : constant(+_), initialize(), force) : numNN;
   };
 
   return force;
