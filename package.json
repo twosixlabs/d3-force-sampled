@@ -1,6 +1,6 @@
 {
   "name": "d3-force-sampled",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Fast force-directed graph layout using random sampling.",
   "keywords": [
     "d3",
@@ -27,20 +27,19 @@
     "url": "https://github.com/twosixlabs/d3-force-sampled.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup -c --banner \"$(preamble)\"",
+    "pretest": "rm -rf build && mkdir build && rollup -c",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-force-sampled.js -c -m -o build/d3-force-sampled.min.js",
+    "prepare": "npm run test && uglifyjs build/d3-force-sampled.js -c -m --comments '/Copyright/' -o build/d3-force-sampled.min.js",
     "postpublish": "git push && git push --tags && zip -j build/d3-force-sampled.zip -- LICENSE README.md build/d3-force-sampled.js build/d3-force-sampled.min.js"
   },
   "devDependencies": {
     "eslint": "4",
-    "package-preamble": "0.1",
-    "rollup": "0.50",
+    "rollup": "0.64",
     "seedrandom": "2",
     "tape": "4",
     "uglify-js": "3"
   },
   "dependencies": {
-    "npm": "^5.7.1"
+    "npm": "^6.9.0"
   }
 }
