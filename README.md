@@ -37,7 +37,7 @@ In particular, it is recommended to use `.velocityDecay(0.2)` when using `d3.for
 
 For full usage examples, see the [simple example of d3-force-sampled](), the [d3-force-sampled speed comparison](), or [composing multiple forces and constraints with d3-force-sampled]():
 
-[<img alt="Simple d3-force-sampled Example" src="https://raw.githubusercontent.com/twosixlabs/d3-force-reuse/master/img/d3-force-sampled-example.png" width="480" height="239">](http://bl.ocks.org/rpgove/14bf7407d66cd364ce399ea0540e67b9)[<img alt="d3-force-sampled Speed Comparison" src="https://raw.githubusercontent.com/twosixlabs/d3-force-reuse/master/img/sampled-vs-bh.png" width="480" height="239">](http://bl.ocks.org/rpgove/28345b65a65753ecbabc3acbe30c3d70)[<img alt="Composing multiple forces and constraints with Random Vertex Sampling" src="https://raw.githubusercontent.com/twosixlabs/d3-force-reuse/master/img/d3-force-sampled-composed.png" width="480" height="239">](http://bl.ocks.org/rpgove/2c523eb97f594de8ae0d04e305495c72)
+[<img alt="Simple d3-force-sampled Example" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/d3-force-sampled-example.png" width="480" height="239">](http://bl.ocks.org/rpgove/14bf7407d66cd364ce399ea0540e67b9)[<img alt="d3-force-sampled Speed Comparison" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/sampled-vs-bh.png" width="480" height="239">](http://bl.ocks.org/rpgove/28345b65a65753ecbabc3acbe30c3d70)[<img alt="Composing multiple forces and constraints with Random Vertex Sampling" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/d3-force-sampled-composed.png" width="480" height="239">](http://bl.ocks.org/rpgove/2c523eb97f594de8ae0d04e305495c72)
 
 ## API Reference
 
