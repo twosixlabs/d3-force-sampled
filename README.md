@@ -39,6 +39,10 @@ For full usage examples, see the [simple example of d3-force-sampled](http://bl.
 
 [<img alt="Simple d3-force-sampled Example" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/d3-force-sampled-example.png" width="480" height="239">](http://bl.ocks.org/rpgove/14bf7407d66cd364ce399ea0540e67b9)[<img alt="d3-force-sampled Speed Comparison" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/sampled-vs-bh.png" width="480" height="239">](http://bl.ocks.org/rpgove/28345b65a65753ecbabc3acbe30c3d70)[<img alt="Composing multiple forces and constraints with Random Vertex Sampling" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/d3-force-sampled-composed.png" width="480" height="239">](http://bl.ocks.org/rpgove/2c523eb97f594de8ae0d04e305495c72)
 
+It is also possible to [combine Random Vertex Sampling and the Barnes-Hut approximation](https://bl.ocks.org/rpgove/e66f1d921718813ecf507178c7dc8d12). Experiments show that it creates smoother, less chaotic layouts than using Random Vertex Sampling alone.
+
+[<img alt="Combining Random Vertex Sampling with Barnes-Hut" src="https://raw.githubusercontent.com/twosixlabs/d3-force-sampled/master/img/combine-rvs-bh.png" width="380" height="280">](https://bl.ocks.org/rpgove/e66f1d921718813ecf507178c7dc8d12)
+
 ## API Reference
 
 ### Many-Body Random Vertex Sampling
