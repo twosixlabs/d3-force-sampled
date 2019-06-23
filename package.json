@@ -33,7 +33,7 @@
     "postpublish": "git push && git push --tags && zip -j build/d3-force-sampled.zip -- LICENSE README.md build/d3-force-sampled.js build/d3-force-sampled.min.js"
   },
   "devDependencies": {
-    "eslint": "4",
+    "eslint": ">=4.18.2",
     "rollup": "0.64",
     "seedrandom": "2",
     "tape": "4",
