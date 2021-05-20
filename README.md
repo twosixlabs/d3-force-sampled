@@ -6,7 +6,7 @@ This module uses the Random Vertex Sampling (RVS) algorithm. The Barnes-Hut appr
 
 If you use this module, please cite the following research paper:
 
-Robert Gove. "A Random Sampling O(n) Force-calculation Algorithm for Graph Layouts." Computer Graphics Forum 38, 3 (2019). [Preprint PDF.](https://osf.io/2vpe4/)
+Robert Gove. "A Random Sampling O(n) Force-calculation Algorithm for Graph Layouts." Computer Graphics Forum 38, 3 (2019) pp. 739--751. [Preprint PDF.](https://osf.io/2vpe4/)
 
 ## Credit
 
