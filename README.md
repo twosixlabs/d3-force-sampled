@@ -4,6 +4,8 @@ This module includes `d3.forceManyBodySampled()`, a faster version of the repuls
 
 This module uses the Random Vertex Sampling (RVS) algorithm. The Barnes-Hut approximation and Fast Multipole Method both use a spatial tree to compute approximate forces on each vertex, or node, in the graph. This means they run in O(|V| log(|V|)) time and require O(|V| log(|V|)) space for a graph with |V| vertices. In contrast, RVS runs in O(|V|) time and requires O(|V|^(3/4)) auxiliary space, or O(|V|) space overall. For specifics of the algorithm, see the [research paper](https://osf.io/2vpe4/), or [this blog post](https://www.twosixlabs.com/graph-layout-by-random-vertex-sampling/) for a simplified explanation.
 
+For a different approach to speeding up force layouts, see also [d3-force-reuse](https://github.com/twosixlabs/d3-force-reuse).
+
 If you use this module, please cite the following research paper:
 
 Robert Gove. "A Random Sampling O(n) Force-calculation Algorithm for Graph Layouts." Computer Graphics Forum 38, 3 (2019) pp. 739--751. [Preprint PDF.](https://osf.io/2vpe4/)
