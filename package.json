@@ -1,6 +1,6 @@
 {
   "name": "d3-force-sampled",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fast force-directed graph layout using random sampling.",
   "keywords": [
     "d3",
