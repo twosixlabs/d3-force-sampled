@@ -47,7 +47,7 @@ export default function() {
     while (++i < node.nearest.length) {
       currIdx = node.nearest[i];
       currNode = nodes[currIdx];
-      currDist = Math.hypot(node.x - currNode.x, node.y - currNode.y);
+      currDist = (node.x - currNode.x) * (node.x - currNode.x) - (node.y - currNode.y) * (node.y - currNode.y);
       if (currDist > maxDist) {
         maxI = i;
         maxDist = currDist;
